@@ -1,3 +1,7 @@
+/*
+ Date : 14/11/2018
+ Description: A simple stopwatch in c++ using gettimeofday() api
+*/
 #include <sys/time.h>
 #include <iostream>
 #include <unistd.h>
