@@ -1,4 +1,7 @@
 
+/*
+ Sample test program to test the stopwatch
+*/
 #include "stopwatch.h"
 int main(int argc, char* argv[])
 {
