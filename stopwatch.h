@@ -5,6 +5,7 @@
 #include <sys/time.h>
 #include <iostream>
 #include <unistd.h>
+#include <cstdio>
 
 enum Unit
 {
@@ -18,10 +19,32 @@ class StopWatch
 public:
 	StopWatch(Unit unit = SECOND);
 	~StopWatch();
+	
+	/* API to start the stopwatch */  	
 	void start();
+	
+	/* 
+ 	 * API to stop the stopwatch
+ 	 * This will return the total elapsed time(In second, Mili second or Micro second)
+ 	 */
 	double stop();
+	
+	/*
+ 	 * This api will return the stopwatch start date and time of the stop watch in the below format:
+ 	 * DD-MM-YYYY HH:MM:SS  
+ 	 */	 	
+	std::string getStartDateAndTime();
+	
+	/*
+ 	 * This api will return the stopwatch stop date and time of the stop watch in the below format:
+ 	 * DD-MM-YYYY HH:MM:SS  
+ 	 */	 	
+	std::string getStopDateAndTime();
+
 private:
 	double getTime(struct timeval& source);
+	std::string format(struct timeval& arg);
+
 private:
 	Unit unit;
 	bool isRunning;
@@ -37,9 +60,30 @@ StopWatch::~StopWatch()
 {
 }
 
+std::string StopWatch::format(struct timeval& arg)
+{
+	char formatedResult[100];
+	struct tm timeval;
+	localtime_r(&arg.tv_sec, &timeval);
+	int ret = strftime(formatedResult, sizeof(formatedResult), "%Y-%m-%d %H:%M:%S", &timeval);
+	snprintf(formatedResult + ret, 100 + ret, "%06ld", arg.tv_usec);
+	std::string result(formatedResult);
+	return result;
+}
+
+std::string StopWatch::getStartDateAndTime()
+{
+	return this->format(this->startTime);
+}
+
+std::string StopWatch::getStopDateAndTime()
+{
+	return this->format(this->endTime);
+}
+
 double StopWatch::getTime(struct timeval& source)
 {
-	double time;
+	double time = 0;
 	switch(unit)
 	{
 		case SECOND:
