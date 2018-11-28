@@ -31,13 +31,13 @@ public:
 	
 	/*
  	 * This api will return the stopwatch start date and time of the stop watch in the below format:
- 	 * DD-MM-YYYY HH:MM:SS  
+ 	 * YYYY-MM-DD HH:MM:SS  
  	 */	 	
 	std::string getStartDateAndTime();
 	
 	/*
  	 * This api will return the stopwatch stop date and time of the stop watch in the below format:
- 	 * DD-MM-YYYY HH:MM:SS  
+ 	 * YYYY-MM-DD HH:MM:SS  
  	 */	 	
 	std::string getStopDateAndTime();
 
